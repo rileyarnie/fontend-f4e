@@ -1,5 +1,5 @@
 import StudentCard from "@/components/StudentCard";
-import { studentData } from "@/constants/studentData";
+import { StudentDataType, studentData } from "@/constants/studentData";
 
 async function fetchStudents() {
   const res = await fetch("http://localhost:3000/api/students");
@@ -11,14 +11,14 @@ async function fetchStudents() {
   return res.json();
 }
 export default async function Home() {
-  // const users = await fetchStudents();
+  const students = await fetchStudents();
 
-  const users = studentData;
-  console.log("users", users);
+  // const users = studentData;
+  // console.log("users", users);
 
   return (
     <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {studentData.map((student) => {
+      {students.map((student: StudentDataType) => {
         return <StudentCard key={student.firstName} student={student} />;
       })}
     </main>

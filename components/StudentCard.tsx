@@ -27,7 +27,10 @@ const StudentCard = (props: { student: StudentDataType }) => {
       <CardContent>
         <div className="text-xs text-muted-foreground flex flex-col">
           <p>Gender: {props.student.gender}</p>
-          <p>Date of Birth: {props.student.dateOfBirth}</p>
+          <p>
+            Date of Birth:{" "}
+            {new Date(props.student.dateOfBirth).toLocaleDateString()}
+          </p>
         </div>
       </CardContent>
       <CardFooter>
