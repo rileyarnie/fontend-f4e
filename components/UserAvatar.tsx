@@ -1,9 +1,13 @@
 import React from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 
-function UserAvatar(props: { imageUrl: string; fallback: string }) {
+function UserAvatar(props: {
+  imageUrl: string;
+  fallback: string;
+  className: string;
+}) {
   return (
-    <Avatar className="h-12 w-12">
+    <Avatar className={props.className}>
       <AvatarImage src={props.imageUrl} />
       <AvatarFallback>{props.fallback}</AvatarFallback>
     </Avatar>

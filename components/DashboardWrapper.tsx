@@ -52,7 +52,7 @@ export function Dashboard({ children }: DashboardProps) {
         </div>
       </div>
       <div className="flex flex-col">
-        <header className="sticky top-0 flex h-14 items-center gap-4 border-b bg-muted px-4 lg:h-[60px] lg:px-6">
+        <header className="sticky z-10 top-0 flex h-14 items-center gap-4 border-b bg-muted px-4 lg:h-[60px] lg:px-6">
           <Sheet>
             <SheetTrigger asChild>
               <Button

@@ -1,5 +1,5 @@
-import { StudentDataType } from "@/constants/studentData";
 import React from "react";
+import { StudentDataType } from "@/constants/studentData";
 import {
   Card,
   CardContent,
@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "./ui/button";
 import UserAvatar from "./UserAvatar";
+import { StudentDetails } from "./StudentDetails";
 
 const StudentCard = (props: { student: StudentDataType }) => {
   return (
@@ -17,6 +18,7 @@ const StudentCard = (props: { student: StudentDataType }) => {
       <CardHeader className="pb-2">
         <div className="flex align-middle items-center space-x-2">
           <UserAvatar
+            className="h-12 w-12 object-contain"
             fallback={`${props.student.firstName[0]}${props.student.firstName[0]}`}
             imageUrl={props.student.image}
           />
@@ -34,7 +36,7 @@ const StudentCard = (props: { student: StudentDataType }) => {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">View Details</Button>
+        <StudentDetails student={props.student} />
       </CardFooter>
     </Card>
   );
