@@ -17,7 +17,6 @@ export async function fetchStudents(gradeFilter?: string, page?: string) {
   return res.json();
 }
 export default async function Home(context: any) {
-  console.log("context.searchParams", context);
   const data = await fetchStudents(
     context.searchParams.grade,
     context.searchParams.page
@@ -34,7 +33,7 @@ export default async function Home(context: any) {
         })}
       </main>
       <StudentPagination
-        currentPage={parseInt(context.searchParams.page)}
+        grade={context.searchParams.grade || ""}
         totalPages={data.totalPages}
       />
     </>

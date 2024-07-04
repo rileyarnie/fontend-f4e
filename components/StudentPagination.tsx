@@ -13,16 +13,33 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface IProps {
   totalPages: number;
-  currentPage: number;
+  grade: string;
 }
 
-const StudentPagination = ({ totalPages, currentPage }: IProps) => {
-  const router = useRouter();
+const StudentPagination = ({ totalPages, grade }: IProps) => {
+  const { replace } = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get("page") || 1);
+  const gradeNumber = Number(searchParams.get("grade") || "");
+
+  const createPageUrl = (page: string) => {
+    //creeates a new page url to maintain the state
+    const params = new URLSearchParams(searchParams);
+
+    if (gradeNumber > 0) {
+      params.set("grade", gradeNumber.toString());
+    } else {
+      params.delete("grade");
+    }
+    params.set("page", page);
+
+    replace(`${pathname}?${params.toString()}`);
+  };
 
   const handleClick = (event: any, item: number) => {
     event.preventDefault();
+    createPageUrl(item.toString());
   };
   return (
     <Pagination>
