@@ -3,7 +3,7 @@ import GradeFilter from "@/components/GradeFilter";
 import { StudentDataType } from "@/constants/studentData";
 import StudentPagination from "@/components/StudentPagination";
 
-export async function fetchStudents(gradeFilter?: string, page?: string) {
+async function fetchStudents(gradeFilter?: string, page?: string) {
   let Params = { gradeFilter: gradeFilter || "", page: page || "1" };
   const res = await fetch(
     `http://localhost:3000/api/students?` +
