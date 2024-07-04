@@ -3,10 +3,24 @@ import { NextResponse } from "next/server";
 import Student from "@/lib/models/student";
 // import { studentData } from "@/constants/studentData";
 
-export async function GET() {
+type StudentFilterType = {
+  grade?: string;
+};
+
+export async function GET(request: Request) {
   try {
     await connect();
-    const students = await Student.find();
+    const { searchParams } = new URL(request.url);
+
+    //get the grade from request params to allow filtering from the database by grade
+    const gradeFilter = searchParams.get("grade") as string;
+    let studentFilter: StudentFilterType = {};
+
+    if (gradeFilter || parseInt(gradeFilter) > 0 || parseInt(gradeFilter) < 9) {
+      studentFilter.grade = `CLASS ${gradeFilter}`;
+    }
+
+    const students = await Student.find(studentFilter);
     return new NextResponse(JSON.stringify(students), { status: 200 });
   } catch (error) {
     return new NextResponse("Couldn't fetch users.Please try again", {
