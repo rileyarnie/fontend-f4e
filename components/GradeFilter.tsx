@@ -12,11 +12,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-const grades = [1, 2, 3, 4, 5, 6, 7, 8];
+export const grades = [1, 2, 3, 4, 5, 6, 7, 8];
 
 export default function GradeFilter() {
   const [isOpen, setIsOpen] = React.useState(false);
+  const router = useRouter();
 
   const toggleOpen = () => {
     setIsOpen(!isOpen);
@@ -24,6 +26,7 @@ export default function GradeFilter() {
 
   const handleGradeChange = (e: string) => {
     toggleOpen();
+    router.refresh();
   };
 
   return (
@@ -41,7 +44,7 @@ export default function GradeFilter() {
             Show All
           </Link>
           {grades.map((grade) => (
-            <Link key={grade} className="p-2" href={`/?grade=${grade}`}>
+            <Link key={grade} className="p-2" href={`/?grade=${grade}&page=1`}>
               Class {grade}
             </Link>
           ))}

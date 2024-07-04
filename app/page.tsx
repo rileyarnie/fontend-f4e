@@ -1,9 +1,10 @@
 import StudentCard from "@/components/StudentCard";
 import GradeFilter from "@/components/GradeFilter";
 import { StudentDataType } from "@/constants/studentData";
+import StudentPagination from "@/components/StudentPagination";
 
-export async function fetchStudents(gradeFilter?: string) {
-  // let  =
+export async function fetchStudents(gradeFilter?: string, page?: string) {
+  let Params = { gradeFilter: gradeFilter || "", page: page || "1" };
   const res = await fetch(
     `http://localhost:3000/api/students?` +
       new URLSearchParams({ grade: gradeFilter || "" })
@@ -16,7 +17,11 @@ export async function fetchStudents(gradeFilter?: string) {
   return res.json();
 }
 export default async function Home(context: any) {
-  const students = await fetchStudents(context.searchParams.grade);
+  console.log("context.searchParams", context);
+  const data = await fetchStudents(
+    context.searchParams.grade,
+    context.searchParams.page
+  );
 
   return (
     <>
@@ -24,10 +29,14 @@ export default async function Home(context: any) {
         <GradeFilter />
       </div>
       <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {students.map((student: StudentDataType) => {
+        {data?.students?.map((student: StudentDataType) => {
           return <StudentCard key={student.firstName} student={student} />;
         })}
       </main>
+      <StudentPagination
+        currentPage={parseInt(context.searchParams.page)}
+        totalPages={data.totalPages}
+      />
     </>
   );
 }
